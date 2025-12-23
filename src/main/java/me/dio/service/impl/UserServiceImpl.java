@@ -5,6 +5,7 @@ import me.dio.domain.repository.UserRepository;
 import me.dio.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -27,5 +28,11 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("This Account number already exists.");
         }
         return userRepository.save(userToCreate);
+    }
+
+    // Novo método para listar usuários por saldo
+    @Override
+    public List<User> listarPorSaldoMaiorQue(Double saldo) {
+        return userRepository.findByAccountBalanceGreaterThan(saldo);
     }
 }

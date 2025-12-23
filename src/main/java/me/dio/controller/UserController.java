@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -32,5 +33,12 @@ public class UserController {
                 .buildAndExpand(userCreated.getId())
                 .toUri();
         return ResponseEntity.created(location).body(userCreated);
+    }
+
+    // Novo endpoint para listar usuários com saldo maior que um valor
+    @GetMapping("/saldo-maior")
+    public ResponseEntity<List<User>> listarUsuariosPorSaldo(@RequestParam Double saldo) {
+        var usuarios = userService.listarPorSaldoMaiorQue(saldo);
+        return ResponseEntity.ok(usuarios);
     }
 }
